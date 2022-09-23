@@ -1,5 +1,5 @@
 # jMessenger
-An easy to use messaging library for java
+An easy to use messaging library for java.
 
 ## Installing
 This library can be installed via [JitPack](https://jitpack.io/), use `master-SNAPSHOT` as version to grab and build the latest commit automatically. Note that this may cause gradle to time out, which can be resolved by waiting up to 5 minutes, then trying to rebuild the project.
