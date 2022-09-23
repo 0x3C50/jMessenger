@@ -106,12 +106,10 @@ public class MessageManager {
             Class<?> listenerType = parameterTypes[0];
             Handler handler = new Handler(instance, aClass, declaredMethod, listenerType, annotationFrom.priority());
             if (this.handlers.contains(handler)) {
-                throw new SubscriberAlreadyRegisteredException(String.format(
-                    "Handler %s.%s%s is already registered",
+                throw new SubscriberAlreadyRegisteredException(String.format("Handler %s.%s%s is already registered",
                     aClass.getName(),
                     declaredMethod.getName(),
-                    Util.signatureOf(declaredMethod)
-                ));
+                    Util.signatureOf(declaredMethod)));
             }
             register(handler);
         }
@@ -148,7 +146,9 @@ public class MessageManager {
 
         @Override
         public boolean equals(Object obj) {
-            if (!(obj instanceof Handler h)) return false;
+            if (!(obj instanceof Handler h)) {
+                return false;
+            }
             return callee.equals(h.callee);
         }
     }

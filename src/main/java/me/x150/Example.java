@@ -1,8 +1,6 @@
 package me.x150;
 
 class Example {
-    record Message(String content) {}
-    record NotAMessage(int v) {}
     static MessageManager manager = new MessageManager();
 
     public static void main(String[] args) {
@@ -17,15 +15,23 @@ class Example {
         manager.send(new Message("Only the EverythingHandler will receive this")); // Send Message to EverythingHandler, but not Example, since it's no longer registered
     }
 
+    @MessageSubscription(priority = 10)
+        // Priority of 10 means this handler will be called after EverythingHandler
+    void handleMessage(Message message) {
+        System.out.printf("(This will be printed after EverythingHandler) Received message: %s%n", message.content);
+    }
+
+    record Message(String content) {
+    }
+
+    record NotAMessage(int v) {
+    }
+
     static class EverythingHandler {
-        @MessageSubscription(priority = -10) // Priority of -10 means this handler will be called before Example
+        @MessageSubscription(priority = -10)
+            // Priority of -10 means this handler will be called before Example
         void handleAllMessages(Object message) {
             System.out.printf("Received message of type %s: %s%n", message.getClass().getName(), message);
         }
-    }
-
-    @MessageSubscription(priority = 10) // Priority of 10 means this handler will be called after EverythingHandler
-    void handleMessage(Message message) {
-        System.out.printf("(This will be printed after EverythingHandler) Received message: %s%n", message.content);
     }
 }
